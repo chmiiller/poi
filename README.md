@@ -24,6 +24,9 @@
   - Improve result item
   - Improve search bar
   - Improve list margin bottom
+  - Add all strings
+  - Define color pallette light
+  - Define color pallette dark
 - Native module
   - Write module iOS
   - Write module Android
