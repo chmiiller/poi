@@ -1,7 +1,6 @@
 # PoI
 
 ## Querying Points of Interest   
-<br/>
 
 ###  To Do:
 - React Native:
