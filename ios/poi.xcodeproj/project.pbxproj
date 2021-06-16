@@ -13,6 +13,10 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		95ED0CAB4E54389596E5E9BE /* libPods-poi-poiTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C7527C1F26D08288EFE881C5 /* libPods-poi-poiTests.a */; };
+		B3B771B4267940A900AAFE70 /* PoiApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B771B3267940A900AAFE70 /* PoiApi.swift */; };
+		B3B771B5267940A900AAFE70 /* PoiApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B771B3267940A900AAFE70 /* PoiApi.swift */; };
+		B3B771BA2679413700AAFE70 /* PoiApi.m in Sources */ = {isa = PBXBuildFile; fileRef = B3B771B92679413700AAFE70 /* PoiApi.m */; };
+		B3B771BB2679413700AAFE70 /* PoiApi.m in Sources */ = {isa = PBXBuildFile; fileRef = B3B771B92679413700AAFE70 /* PoiApi.m */; };
 		C166AA685F516023536D9F96 /* libPods-poi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C3B0C1B8F200C46118D18687 /* libPods-poi.a */; };
 /* End PBXBuildFile section */
 
@@ -40,6 +44,9 @@
 		158126AAD32C3FE69AEB98DA /* Pods-poi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-poi.release.xcconfig"; path = "Target Support Files/Pods-poi/Pods-poi.release.xcconfig"; sourceTree = "<group>"; };
 		303DDF4BA32F129877F8DC00 /* Pods-poi-poiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-poi-poiTests.release.xcconfig"; path = "Target Support Files/Pods-poi-poiTests/Pods-poi-poiTests.release.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = poi/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		B3B771B3267940A900AAFE70 /* PoiApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoiApi.swift; sourceTree = "<group>"; };
+		B3B771B8267940E900AAFE70 /* poi-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "poi-Bridging-Header.h"; sourceTree = "<group>"; };
+		B3B771B92679413700AAFE70 /* PoiApi.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PoiApi.m; sourceTree = "<group>"; };
 		C3B0C1B8F200C46118D18687 /* libPods-poi.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-poi.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6ED50E5D9E493FDA57FF630 /* Pods-poi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-poi.debug.xcconfig"; path = "Target Support Files/Pods-poi/Pods-poi.debug.xcconfig"; sourceTree = "<group>"; };
 		C7527C1F26D08288EFE881C5 /* libPods-poi-poiTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-poi-poiTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -116,6 +123,9 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				B3B771B3267940A900AAFE70 /* PoiApi.swift */,
+				B3B771B92679413700AAFE70 /* PoiApi.m */,
+				B3B771B8267940E900AAFE70 /* poi-Bridging-Header.h */,
 				13B07FAE1A68108700A75B9A /* poi */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* poiTests */,
@@ -145,7 +155,6 @@
 				0582A0C8504FA8F5CFB222E0 /* Pods-poi-poiTests.debug.xcconfig */,
 				303DDF4BA32F129877F8DC00 /* Pods-poi-poiTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -205,10 +214,11 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
+						LastSwiftMigration = 1220;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1220;
 					};
 				};
 			};
@@ -403,6 +413,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3B771B5267940A900AAFE70 /* PoiApi.swift in Sources */,
+				B3B771BB2679413700AAFE70 /* PoiApi.m in Sources */,
 				00E356F31AD99517003FC87E /* poiTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -411,6 +423,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3B771BA2679413700AAFE70 /* PoiApi.m in Sources */,
+				B3B771B4267940A900AAFE70 /* PoiApi.swift in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
@@ -431,7 +445,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0582A0C8504FA8F5CFB222E0 /* Pods-poi-poiTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -450,6 +466,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "poiTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/poi.app/poi";
 			};
 			name = Debug;
@@ -458,7 +477,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 303DDF4BA32F129877F8DC00 /* Pods-poi-poiTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = poiTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -474,6 +495,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "poiTests-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/poi.app/poi";
 			};
 			name = Release;
@@ -498,6 +521,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = poi;
+				SWIFT_OBJC_BRIDGING_HEADER = "poi-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -523,6 +547,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = poi;
+				SWIFT_OBJC_BRIDGING_HEADER = "poi-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

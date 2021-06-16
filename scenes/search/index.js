@@ -4,7 +4,7 @@ import { ActivityIndicator, FlatList, StyleSheet, TextInput, TouchableOpacity, u
 import { BLACK_54 } from '../../constants/colors';
 import { SEARCH_PLACEHOLDER, SEARCH_NOT_FOUND } from '../../constants/strings';
 import SearchResultItem from '../../components/ListItem/SearchResultItem';
-import { searchGame } from '../../api';
+import { searchPointsOfInterest } from '../../api';
 
 /* 
 const isDarkMode = useColorScheme() === 'dark';
@@ -78,7 +78,7 @@ const SearchScreen = () => {
     };
 
     const callSearchApi = async term => {
-        const result = await searchGame(term);
+        const result = await searchPointsOfInterest(term);
         setIsLoading(false);
         setSearchResults(result);
     };

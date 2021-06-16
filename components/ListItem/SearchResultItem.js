@@ -6,7 +6,7 @@ const SearchResultItem = ({ item, index, onClick }) => {
         return <View />;
     }
     const first = (index === 0);
-    const distanceStr = `${item.distance}m`;
+    const distanceStr = item.dist ? `${Math.round(item.dist)}m` : false;
     return (
         <Pressable
             key={`level_card_${item.id}`}
@@ -15,7 +15,7 @@ const SearchResultItem = ({ item, index, onClick }) => {
         >
             <View style={styles.cardTextContainer}>
                 <Text style={styles.title}>{item.name}</Text>
-                <Text style={styles.subtitle}>{distanceStr}</Text>
+                {distanceStr && <Text style={styles.subtitle}>{distanceStr}</Text>}
                 <Text style={styles.subtitle}>{item.address}</Text>
             </View>
         </Pressable>
