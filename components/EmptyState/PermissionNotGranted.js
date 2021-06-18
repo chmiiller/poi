@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Linking, StyleSheet, Text, View, useColorScheme } from 'react-native';
+import PropTypes from 'prop-types';
 
 import { BLACK_89 } from '../../constants/colors';
 
@@ -44,5 +45,9 @@ const styles = StyleSheet.create({
         marginBottom: 8,
     },
 });
+
+PermissionNotGranted.propTypes = {
+    onClick: PropTypes.func.isRequired,
+};
 
 export default PermissionNotGranted;

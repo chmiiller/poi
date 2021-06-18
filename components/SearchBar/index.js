@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, TextInput, View, useColorScheme } from 'react-native';
+import PropTypes from 'prop-types';
 
 import { ATOM_GRAY, GRAY0, GRAY2, GRAY3, BLACK_89, WHITE } from '../../constants/colors';
 import { SEARCH_PLACEHOLDER } from '../../constants/strings';
@@ -56,5 +57,14 @@ const styles = StyleSheet.create({
         paddingBottom: 0,
     },
 });
+
+SearchBar.propTypes = {
+    suggestedTerm: PropTypes.string,
+    onSearch: PropTypes.func.isRequired,
+};
+
+SearchBar.defaultProps = {
+    suggestedTerm: '',
+};
 
 export default SearchBar;

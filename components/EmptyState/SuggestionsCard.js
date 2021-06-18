@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Platform, StyleSheet, Text, View, useColorScheme } from 'react-native';
+import PropTypes from 'prop-types';
 
 import { AMIGO, BLUE_IOS, GRAY3, WHITE } from '../../constants/colors';
 const SuggestionsCard = ({ onClick }) => {
@@ -38,5 +39,10 @@ const styles = StyleSheet.create({
         marginBottom: 8,
     }
 });
+
+SuggestionsCard.propTypes = {
+    onClick: PropTypes.func.isRequired,
+    name: PropTypes.string,
+};
 
 export default SuggestionsCard;

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import PropTypes from 'prop-types';
 
 import { AMIGO, WHITE } from '../../constants/colors';
 
@@ -77,5 +78,16 @@ const styles = StyleSheet.create({
         marginTop: 8,
     },
 });
+
+SearchResultItem.propTypes = {
+    item: PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        dist: PropTypes.number,
+        name: PropTypes.string.isRequired,
+        address: PropTypes.string,
+    }),
+    index: PropTypes.number,
+    onClick: PropTypes.func,
+};
 
 export default SearchResultItem;
