@@ -1,2 +1,1 @@
-export const SEARCH_PLACEHOLDER = 'Search for a restaurant, gas station, parking, or anything else.';
-export const SEARCH_NOT_FOUND = 'Could not find anything, try something like Restaurant or Groceries for example';
+export const SEARCH_PLACEHOLDER = 'Cafés, gas stations, shops and more';

@@ -1,12 +1,14 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { AMIGO, WHITE } from '../../constants/colors';
+
 const SearchResultItem = ({ item, index, onClick }) => {
     if(!item || !item.id) {
         return <View />;
     }
     const first = (index === 0);
-    const distanceStr = item.dist ? `${Math.round(item.dist)}m` : false;
+    const distanceStr = item.dist ? `${Math.round(item.dist)}m` : '';
     return (
         <Pressable
             key={`level_card_${item.id}`}
@@ -14,8 +16,7 @@ const SearchResultItem = ({ item, index, onClick }) => {
             onPress={() => onClick(item)}
         >
             <View style={styles.cardTextContainer}>
-                <Text style={styles.title}>{item.name}</Text>
-                {distanceStr && <Text style={styles.subtitle}>{distanceStr}</Text>}
+                <Text style={styles.title}>{`${item.name} - ${distanceStr}`}</Text>
                 <Text style={styles.subtitle}>{item.address}</Text>
             </View>
         </Pressable>
@@ -25,7 +26,7 @@ const SearchResultItem = ({ item, index, onClick }) => {
 const cardStyle = ({ pressed, first }) => {
     let newStyle = styles.card;
     if (first) {
-        newStyle = { ...newStyle, marginTop: 32 }
+        newStyle = { ...newStyle, marginTop: 12 };
     }
     return (!pressed) ? newStyle : { ...newStyle, opacity: 0.6 };
 };
@@ -33,12 +34,10 @@ const cardStyle = ({ pressed, first }) => {
 const styles = StyleSheet.create({
     card: {
         height: 110,
-        borderRadius: 4,
-        backgroundColor: 'black',
         flexDirection: 'row',
         marginHorizontal: 24,
         marginTop: 16,
-        marginBottom: 16,
+        marginBottom: 8,
         shadowColor: '#000',
         shadowOffset: { height: 1 },
         shadowOpacity: 0.45,
@@ -48,7 +47,7 @@ const styles = StyleSheet.create({
     cardImage: {
         height: '100%',
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: WHITE,
         borderTopLeftRadius: 4,
         borderTopRightRadius: 0,
         borderBottomLeftRadius: 4,
@@ -58,20 +57,21 @@ const styles = StyleSheet.create({
         flex: 2,
         flexDirection: 'column',
         justifyContent: 'center',
+        borderRadius: 12,
         height: '100%',
         padding: 8,
-        backgroundColor: 'black',
+        backgroundColor: AMIGO,
         alignItems: 'center',
     },
     title: {
         fontSize: 20,
-        color: 'white',
+        color: WHITE,
         fontWeight: '600',
         textAlign: 'center'
     },
     subtitle: {
         fontSize: 16,
-        color: 'white',
+        color: WHITE,
         fontWeight: 'normal',
         textAlign: 'center',
         marginTop: 8,

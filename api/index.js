@@ -2,47 +2,36 @@ import NativePoiModule from './NativePoiModule';
 
 const { BASE_URL } = NativePoiModule.getConstants();
 const apiKey = '';
-const spuiLat = '52.076558403826354';
-const spuiLon = '4.317172258276077';
 const radius = '5000';
 
-export const searchPointsOfInterest = async term => {
-    if (!term) return;
-
+export const searchPointsOfInterest = async({ term, lat, lon }) => {
     term = sanitizeString(term);
     try {
-        try {
-            const response = await NativePoiModule.getPointsOfInterest({
-                baseUrl: BASE_URL,
-                apiKey,
-                term,
-                limit: '10',
-                lat: spuiLat,
-                lon: spuiLon,
-                radius,
-            });
-            console.log(` >>>>>>>>>>>>>>>>>>>>>>>>>>>>> response: ${JSON.stringify(response,null,'    ')} `);
-            if (response && response.length > 1) {
-                const [summary, results] = response;
-                console.log(` >>>>>>>>>>>>>>>>>>>>>>>>>>>>> summary: ${JSON.stringify(summary,null,'    ')} `);
-                return results;
-            }
-        } catch (error) {
-            console.error(`Error! ${error}`);
+        const response = await NativePoiModule.getPointsOfInterest({
+            baseUrl: BASE_URL,
+            apiKey,
+            term,
+            limit: '10',
+            lat,
+            lon,
+            radius,
+        });
+        // console.log(` >>>>>>>>>>>>>>>>>>>>>>>>>>>>> response: ${JSON.stringify(response,null,'    ')} `);
+        if (response && response.length > 1) {
+            const [ summary, results ] = response;
+            return results;
         }
-        
-        /*
-            ** Fetching with JS
-            const url = `${BASE_URL}/search/2/poiSearch/${term}.json?typeahead=false&limit=10&lat=${spuiLat}&lon=${spuiLon}&radius=${radius}&key=${apiKey}`;
-            const response = await fetch(url);
-            const json = await response.json();
-            if (json.results) {
-                return json.results.map(poi => preparePOIItem(poi));
-            }
-        */
     } catch (error) {
-        console.error(error);
+        console.error(`Error! ${error}`);
     }
+    
+    // Fetching with JS
+    // const url = `${BASE_URL}/search/2/poiSearch/${term}.json?typeahead=false&limit=10&lat=${lat}&lon=${lon}&radius=${radius}&key=${apiKey}`;
+    // const response = await fetch(url);
+    // const json = await response.json();
+    // if (json.results) {
+    //     return json.results.map(poi => preparePOIItem(poi));
+    // }
 };
 
 const preparePOIItem = item => {
@@ -60,5 +49,6 @@ const preparePOIItem = item => {
 const sanitizeString = str => {
     str = str.toLowerCase();
     str = str.replace(/[^a-z0-9áéíóúñü \.,_-]/gim,"");
+    str = encodeURIComponent(str);
     return str.trim();
 };

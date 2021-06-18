@@ -1,46 +1,24 @@
-import React, { useState, createRef } from 'react';
-import { ActivityIndicator, FlatList, StyleSheet, TextInput, TouchableOpacity, useColorScheme, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { ActivityIndicator, FlatList, StyleSheet, View, useColorScheme } from 'react-native';
+import RNLocation from 'react-native-location';
 
-import { BLACK_54 } from '../../constants/colors';
-import { SEARCH_PLACEHOLDER, SEARCH_NOT_FOUND } from '../../constants/strings';
 import SearchResultItem from '../../components/ListItem/SearchResultItem';
+import PermissionNotGranted from '../../components/EmptyState/PermissionNotGranted';
+import SuggestionsCard from '../../components/EmptyState/SuggestionsCard';
+import SearchBar from '../../components/SearchBar';
+import { GRAY3, WHITE } from '../../constants/colors';
+
 import { searchPointsOfInterest } from '../../api';
 
-/* 
-const isDarkMode = useColorScheme() === 'dark';
-const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-};
+RNLocation.configure({
+    distanceFilter: 5.0
+});
 
-style={[
-    styles.sectionTitle,
-    {
-        color: isDarkMode ? Colors.white : Colors.black,
-    },
-]}>
-
-*/
 const styles = StyleSheet.create({
-    barContainer: {
-        backgroundColor: BLACK_54,
-        padding: 8,
-        borderColor: BLACK_54,
-        borderBottomWidth: 0.5,
-        margin: 8,
-        flexDirection: 'row', 
-        alignItems: 'center', 
-        height: 50,
-    },
-    textInput: {
-        flex: 1,
-        fontSize: 18,
-        color: BLACK_54,
-        paddingTop: 0,
-        paddingBottom: 0,
-    },
     content: {
-        backgroundColor: 'transparent', 
+        backgroundColor: 'transparent',
         width: '100%',
+        height: '90%',
         padding: 8,
     },
     flatList: {
@@ -50,92 +28,132 @@ const styles = StyleSheet.create({
 });
 
 const SearchScreen = () => {
-    const isDarkMode = useColorScheme === 'dark';
-
-    const [value, setSearchValue] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [withError, setWithError] = useState(false);
+    const [permissionsGranted, setPermissionsGranted] = useState(true);
+    const [suggestedTerm, setSuggestedTerm] = useState('');
+    const [latLon, setLatLon] = useState({ lat: '', lon: '' });
     const [searchResults, setSearchResults] = useState([]);
-    const textInputRef = createRef();
+    const isDarkMode = useColorScheme() === 'dark';
 
-    const onCancelPress = () => {
-        setSearchValue('');
-        setSearchResults([]);
-        setIsLoading(false);
-        setWithError(false);
-        textInputRef.current.blur();
+    const checkPermission = async () => {
+        const permission = await RNLocation.checkPermission({
+            ios: 'whenInUse',
+            android: {
+                detail: 'fine'
+            }
+        });
+        return permission;
+    };
+    
+    const askForPermissions = async () => {
+        try {
+            const granted = await RNLocation.requestPermission({
+                ios: 'whenInUse',
+                android: {
+                    detail: 'fine',
+                    rationale: {
+                        title: `We need access to your device's location`,
+                        message: `This app recommends Points of Interest based on your device's location`,
+                        buttonPositive: 'OK',
+                        buttonNegative: 'Cancel',
+                    }
+                }
+            });
+            if (granted) {
+                await getLocation();
+                setPermissionsGranted(true);
+            }
+        } catch (error) {
+            setPermissionsGranted(false);
+        }
+        
     };
 
-    const onChangeText = (text) => {
-        setSearchValue(text);
+    useEffect(() => {
+        initLocationService();
+    }, []);
+
+    const initLocationService = async() => {
+        const hasLocationPermission = await checkPermission();
+        if (hasLocationPermission) {
+            setPermissionsGranted(true);
+            await getLocation();
+        } else {
+            setPermissionsGranted(false);
+            await askForPermissions();
+        }
     };
 
-    const onSubmitSearch = () => {
-        if (value) {
+    const getLocation = async() => {
+        let location = await RNLocation.getLatestLocation({timeout: 100});
+        if (location) {
+            setLatLon({ lat: location.latitude.toString(), lon: location.longitude.toString() });
+        }
+    };
+
+    const onSubmitSearch = term => {
+        if (term && term.length > 3) {
             setIsLoading(true);
-            callSearchApi(value);
+            callSearchApi(term);
+        } else {
+            setSearchResults([]);
         }
     };
 
     const callSearchApi = async term => {
-        const result = await searchPointsOfInterest(term);
-        setIsLoading(false);
-        setSearchResults(result);
+        if (term && latLon.lat && latLon.lon) {
+            setIsLoading(true);
+            const result = await searchPointsOfInterest({
+                term,
+                lat: latLon.lat,
+                lon: latLon.lon,
+            });
+            setIsLoading(false);
+            setSearchResults(result);
+        }
     };
-
-    const buttonExtraMargin = { top: 10, bottom: 10, left: 10, right: 10 };
 
     const ResultItem = ({ item, index }) => (
         <SearchResultItem
             item={item}
             index={index}
-            onClick={() => {
-                alert('Item clicked');
+            onClick={item => {
+                console.log(` >>>>>>>>>>>>>>>>>>>>>>>>>>>>> item: ${JSON.stringify(item,null,'    ')} `);
             }}
         />
     );
 
     const renderSearchContent = () => {
+        if ( isLoading ) {
+            return ( <ActivityIndicator size="large" color={isDarkMode ? WHITE : GRAY3} /> );
+        }
         if (searchResults.length === 0) {
-            return ( <View/> );
+            return ( <SuggestionsCard onClick={term => {
+                onSubmitSearch(term);
+                setSuggestedTerm(term);
+            }}/> );
         }
 
-        if ( isLoading ) {
-            return ( <ActivityIndicator size="large" color={'white'} /> );
-        } else {
-            return (
-                <FlatList
-                    style={styles.flatList}
-                    data={searchResults}
-                    renderItem={({ item, index }) => ResultItem({ item, index })}
-                    keyExtractor={item => `result_${item.id}`}
-                />
-            );
-        }
+        return (
+            <FlatList
+                style={styles.flatList}
+                data={searchResults}
+                renderItem={({ item, index }) => ResultItem({ item, index })}
+                keyExtractor={item => `result_${item.id}`}
+            />
+        );
     };
 
     return (
         <View>
-            <View style={[styles.barContainer, { backgroundColor: isDarkMode ? BLACK_54 : 'white' }]}>
-                <TextInput
-                    ref={textInputRef}
-                    selectionColor={BLACK_54}
-                    placeholderTextColor={BLACK_54}
-                    onSubmitEditing={onSubmitSearch}
-                    placeholder={SEARCH_PLACEHOLDER}
-                    style={[styles.textInput, { color: isDarkMode ? 'white' : BLACK_54 }]}
-                    value={value}
-                    onChangeText={onChangeText}
-                    keyboardAppearance={isDarkMode ? 'light' : 'dark'}
-                />
-                <TouchableOpacity
-                    onPress={onCancelPress}
-                    hitSlop={buttonExtraMargin}
-                >
-                </TouchableOpacity>
-            </View>
+            <SearchBar onSearch={onSubmitSearch} suggestedTerm={suggestedTerm}/>
             <View style={styles.content}>
-                {renderSearchContent()}
+                {!permissionsGranted && (
+                    <PermissionNotGranted onClick={async() => {
+                        await askForPermissions();
+                    }}/>
+                )}
+                {permissionsGranted && (renderSearchContent())}
             </View>
         </View>
         
