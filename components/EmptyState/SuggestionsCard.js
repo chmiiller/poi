@@ -1,13 +1,18 @@
-import React from 'react';
+// @flow strict-local
+import * as React from 'react';
 import { Button, Platform, StyleSheet, Text, View, useColorScheme } from 'react-native';
-import PropTypes from 'prop-types';
 
 import { AMIGO, BLUE_IOS, GRAY3, WHITE } from '../../constants/colors';
-const SuggestionsCard = ({ onClick }) => {
-    const isDarkMode = useColorScheme() === 'dark';
-    const suggestions = ['Restaurants', 'Gas Stations', 'Parking', 'Pizza', 'Groceries'];
+
+type SuggestionsCardProps = {
+    onClick: any,
+};
+
+const SuggestionsCard = ({ onClick }: SuggestionsCardProps): React.Node => {
+    const isDarkMode: boolean = useColorScheme() === 'dark';
+    const suggestions: Array<string> = ['Restaurants', 'Gas Stations', 'Parking', 'Pizza', 'Groceries'];
     
-    const Item = ({ name }) => {
+    const Item = ({ name }: {name: string}): React.Node => {
         return (
             <View style={styles.buttonContainer}>
                 <Button color={Platform.OS === 'ios' ? BLUE_IOS : AMIGO} title={name} onPress={() => {
@@ -21,7 +26,7 @@ const SuggestionsCard = ({ onClick }) => {
     return (
         <View>
             {Platform.OS !== 'ios' && (<Text style={[styles.title, { color: isDarkMode ? WHITE : GRAY3}]}>Discover</Text>) }
-            {suggestions.map(name => (<Item key={name} name={name} />))}
+            {suggestions.map((name: string) => (<Item key={name} name={name} />))}
         </View>
     );
 };
@@ -39,10 +44,5 @@ const styles = StyleSheet.create({
         marginBottom: 8,
     }
 });
-
-SuggestionsCard.propTypes = {
-    onClick: PropTypes.func.isRequired,
-    name: PropTypes.string,
-};
 
 export default SuggestionsCard;

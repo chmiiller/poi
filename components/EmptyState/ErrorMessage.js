@@ -1,14 +1,19 @@
-import React from 'react';
+// @flow strict-local
+import * as React from 'react';
 import { Pressable, StyleSheet, Text, useColorScheme } from 'react-native';
-import PropTypes from 'prop-types';
 
 import { BLACK_89 } from '../../constants/colors';
 
-const ErrorMessage = ({ type, onPress }) => {
-    const isDarkMode = useColorScheme() === 'dark';
-    const titleColor = isDarkMode ? 'white' : BLACK_89;
-    let errorTitle = '';
-    let errorMessage = '';
+type ErrorMessageProps = {
+    type: string,
+    onPress: any,
+};
+
+const ErrorMessage = ({ type, onPress }: ErrorMessageProps ): React.Node => {
+    const isDarkMode: boolean = useColorScheme() === 'dark';
+    const titleColor: string = isDarkMode ? 'white' : BLACK_89;
+    let errorTitle: string = '';
+    let errorMessage: string = '';
     switch (type) {
     case 'gps':
         errorTitle = `We couldn't find you!`;
@@ -63,10 +68,5 @@ const styles = StyleSheet.create({
         marginBottom: 8,
     },
 });
-
-ErrorMessage.propTypes = {
-    type: PropTypes.string,
-    onPress: PropTypes.func.isRequired,
-};
 
 export default ErrorMessage;

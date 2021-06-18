@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+// @flow strict-local
+import * as React from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, View, useColorScheme } from 'react-native';
 import RNLocation from 'react-native-location'; // location services like permissions and latitude/longitude
 
@@ -11,23 +12,33 @@ import ErrorMessage from '../../components/EmptyState/ErrorMessage';
 import SearchBar from '../../components/SearchBar';
 import { GRAY3, WHITE } from '../../constants/colors';
 
-
 RNLocation.configure({
     // min distance meters that the device location needs to change before calling the location update callback
     distanceFilter: 5.0
 });
 
-const SearchScreen = () => {
-    const [isLoading, setIsLoading] = useState(false);
-    const [permissionsGranted, setPermissionsGranted] = useState(true);
-    const [suggestedTerm, setSuggestedTerm] = useState('');
-    const [withError, setWithError] = useState('');
-    const [latLon, setLatLon] = useState({ lat: '', lon: '' });
-    const [searchResults, setSearchResults] = useState([]);
+
+type ResultItemProps = {
+    item: {
+        id: string,
+        dist?: number,
+        name: string,
+        address: string,
+    },
+    index: number,
+};
+
+const SearchScreen = (): React.Node => {
+    const [isLoading, setIsLoading] = React.useState(false);
+    const [permissionsGranted, setPermissionsGranted] = React.useState(true);
+    const [suggestedTerm, setSuggestedTerm] = React.useState('');
+    const [withError, setWithError] = React.useState('');
+    const [latLon, setLatLon] = React.useState({ lat: '', lon: '' });
+    const [searchResults, setSearchResults] = React.useState([]);
     const isDarkMode = useColorScheme() === 'dark';
 
-    const checkPermission = async () => {
-        const permission = await RNLocation.checkPermission({
+    const checkPermission = async (): Promise<boolean> => {
+        const permission: boolean = await RNLocation.checkPermission({
             ios: 'whenInUse',
             android: {
                 detail: 'fine'
@@ -36,7 +47,7 @@ const SearchScreen = () => {
         return permission;
     };
     
-    const askForPermissions = async () => {
+    const askForPermissions = async () =>  {
         try {
             const granted = await RNLocation.requestPermission({
                 ios: 'whenInUse',
@@ -57,15 +68,14 @@ const SearchScreen = () => {
         } catch (error) {
             setPermissionsGranted(false);
         }
-        
     };
 
-    useEffect(() => {
+    React.useEffect(() => {
         initLocationService();
     }, []);
 
     const initLocationService = async() => {
-        const hasLocationPermission = await checkPermission();
+        const hasLocationPermission: boolean = await checkPermission();
         if (hasLocationPermission) {
             setPermissionsGranted(true);
             await getLocation();
@@ -82,7 +92,7 @@ const SearchScreen = () => {
         }
     };
 
-    const onSubmitSearch = term => {
+    const onSubmitSearch = (term: string) => {
         if (term && term.length > 3) {
             setIsLoading(true);
             callSearchApi(term);
@@ -91,7 +101,7 @@ const SearchScreen = () => {
         }
     };
 
-    const callSearchApi = async term => {
+    const callSearchApi = async (term: string) => {
         if (term && latLon.lat && latLon.lon) {
             setIsLoading(true);
             const result = await searchPointsOfInterest({
@@ -113,7 +123,7 @@ const SearchScreen = () => {
     };
 
     // Separated list item for better readability
-    const ResultItem = ({ item, index }) => (
+    const ResultItem = ({ item, index }: ResultItemProps) => (
         <SearchResultItem
             item={item}
             index={index}

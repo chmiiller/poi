@@ -1,20 +1,26 @@
-import React, { useEffect, useState } from 'react';
+// @flow strict-local
+import * as React from 'react';
 import { StyleSheet, TextInput, View, useColorScheme } from 'react-native';
-import PropTypes from 'prop-types';
 
 import { ATOM_GRAY, GRAY0, GRAY2, GRAY3, BLACK_89, WHITE } from '../../constants/colors';
 import { SEARCH_PLACEHOLDER } from '../../constants/strings';
 
-const SearchBar = ({ suggestedTerm, onSearch }) => {
-    const isDarkMode = useColorScheme() === 'dark';
-    const [value, setSearchValue] = useState('');
-    const titleColor = isDarkMode ? WHITE : BLACK_89;
+type SearchBarProps = {
+    suggestedTerm?: string,
+    onSearch: any,
+};
 
-    const onChangeText = text => {
+const SearchBar = ({ suggestedTerm, onSearch }: SearchBarProps): React.Node => {
+    const isDarkMode: boolean = useColorScheme() === 'dark';
+    const titleColor: string = isDarkMode ? WHITE : BLACK_89;
+
+    const [value, setSearchValue] = React.useState('');
+
+    const onChangeText = (text: string) => {
         setSearchValue(text);
     };
 
-    useEffect(() => {
+    React.useEffect(() => {
         setSearchValue(suggestedTerm);
     }, [suggestedTerm]);
 
@@ -57,14 +63,5 @@ const styles = StyleSheet.create({
         paddingBottom: 0,
     },
 });
-
-SearchBar.propTypes = {
-    suggestedTerm: PropTypes.string,
-    onSearch: PropTypes.func.isRequired,
-};
-
-SearchBar.defaultProps = {
-    suggestedTerm: '',
-};
 
 export default SearchBar;

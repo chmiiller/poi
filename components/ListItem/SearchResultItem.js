@@ -1,10 +1,21 @@
-import React from 'react';
+// @flow strict-local
+import * as React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import PropTypes from 'prop-types';
 
 import { AMIGO, WHITE } from '../../constants/colors';
 
-const SearchResultItem = ({ item, index, onClick }) => {
+type SearchResultItemProps = {
+    item: {
+        id: string,
+        dist?: number,
+        name: string,
+        address: string,
+    },
+    index: number,
+    onClick: any,
+};
+
+const SearchResultItem = ({ item, index, onClick }: SearchResultItemProps): React.Node => {
     if(!item || !item.id) {
         return <View />;
     }
@@ -78,16 +89,5 @@ const styles = StyleSheet.create({
         marginTop: 8,
     },
 });
-
-SearchResultItem.propTypes = {
-    item: PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        dist: PropTypes.number,
-        name: PropTypes.string.isRequired,
-        address: PropTypes.string,
-    }),
-    index: PropTypes.number,
-    onClick: PropTypes.func,
-};
 
 export default SearchResultItem;

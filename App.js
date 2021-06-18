@@ -6,21 +6,21 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import * as React from 'react';
 import {
     SafeAreaView,
     StatusBar,
     useColorScheme,
 } from 'react-native';
 
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { BLACK_CONTAINER, WHITE } from './constants/colors';
 import SearchScreen from './scenes/search';
 
-const App = () => {
+const App = (props: {}): React.Node => {
     const isDarkMode = useColorScheme() === 'dark';
 
     const backgroundStyle = {
-        backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+        backgroundColor: isDarkMode ? BLACK_CONTAINER : WHITE,
     };
 
     return (

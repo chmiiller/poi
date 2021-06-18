@@ -1,17 +1,24 @@
-import React from 'react';
+// @flow strict-local
+import * as React from 'react';
 import { Button, Linking, StyleSheet, Text, View, useColorScheme } from 'react-native';
-import PropTypes from 'prop-types';
 
 import { BLACK_89 } from '../../constants/colors';
 
-const PermissionNotGranted = ({ onClick }) => {
-    const isDarkMode = useColorScheme() === 'dark';
-    const titleColor = isDarkMode ? 'white' : BLACK_89;
+type PermissionNotGrantedProps = {
+    onClick: any,
+};
+
+// const Section = ({ title, content, link }: SectionProps) => (
+const PermissionNotGranted = ({ onClick }: PermissionNotGrantedProps): React.Node => {
+    const isDarkMode: boolean = useColorScheme() === 'dark';
+    const titleColor: string = isDarkMode ? 'white' : BLACK_89;
     return (
         <View style={[styles.card, { backgroundColor: isDarkMode ? BLACK_89 : 'white' }]}>
             <Text style={[styles.title, { color: titleColor }]}>{`We couldn't find you!`}</Text>
             <Text style={[styles.subtitle, { color: titleColor }]}>{`Please allow location access in the Settings app so we can search for places around you.`}</Text>
-            <Button title={'Open Settings'} onPress={Linking.openSettings}  />
+            <Button title={'Open Settings'} onPress={() => {
+                Linking.openSettings();
+            }}  />
             <Text style={[styles.subtitle, { color: titleColor }]}>{`Then when you're back, press "Done" to continue`}</Text>
             <Button title={'Done'} onPress={onClick}  />
         </View>
@@ -45,9 +52,5 @@ const styles = StyleSheet.create({
         marginBottom: 8,
     },
 });
-
-PermissionNotGranted.propTypes = {
-    onClick: PropTypes.func.isRequired,
-};
 
 export default PermissionNotGranted;

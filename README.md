@@ -41,7 +41,7 @@ to run it in an Android connected device.
 
 
 ## Dependencies
-Besides the React Native Native Modules written specifically for this app, there's only one dependency added to this project. This dependency is the [react-native-location](https://github.com/timfpark/react-native-location) library. React Native doesn't implement location or geo location APIs out of the box and at their [documentation](https://reactnative.dev/docs/0.63/geolocation) they suggest users to use a community package instead.
+Besides the React Native Native Modules written specifically for this app, there's only one dependency added to this project. This dependency is the [react-native-location](https://github.com/timfpark/react-native-location) library. React Native doesn't implement location or geo location APIs out of the box and in their [documentation](https://reactnative.dev/docs/0.63/geolocation) they suggest users to use a community package instead.
 
 ## React Native Native Modules
 A Swift and a Java React Native Module were made for this project in order to fetch TomTom's API and parse the responses natively.   
@@ -56,7 +56,7 @@ Let's start with the simple ones first: `poi-Bridging-Header.h` is just a Object
 The `PoiApi.swift` is where the code is. It has 4 methods:
 
 ### `parseSummary` and `parseJsonData` methods
-This methods, as their names already say, receives as Data object from our API response and parses it the way we prefer to read our data structure, returning a `NSDictionary` or an Array of all items already processed.
+These methods, as their names already say, receives a Data object from our API response and parses it the way we prefer to read our data structure, returning a `NSDictionary` or an Array of all items already processed.
 
 ### `getPointsOfInterest`
 This is an exposed method that can be called from the React Native land. It receives a "configuration" object and calls TomTom's API to fetch Points Of Interest based on the search and location of the user. After fetching this data and parsing them with above mentioned methods, it returns an Array with both a summary of this query and a list of results as a Promise Resolve to the JS side of the app.
