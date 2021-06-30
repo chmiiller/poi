@@ -2,7 +2,7 @@
 import NativePoiModule from './NativePoiModule';
 
 const { BASE_URL } = NativePoiModule.getConstants(); // Reads BASE_URL from native module
-const apiKey = 'IR8CRLQRjnAuInGFbZUYdBiKbdu5f5BV';
+const apiKey = '';
 const radius = '5000';
 const limit = '25';
 
